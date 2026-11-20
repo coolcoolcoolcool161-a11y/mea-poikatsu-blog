@@ -59,11 +59,11 @@ const title = '紹介コード・招待コードまとめ｜ワラウ・ハピ�
 <BaseLayout title={title} description={SITE.description} canonicalPath="/" jsonLd={jsonLd}>
 <div class="wrap">
 <div class="hero">
-<img src="/images/hero.jpg" alt="メアのポイ活バナー ポイ活×招待コード×紹介系 一緒におトクをGETしよう" width="1179" height="393" />
+<img src="/mea-poikatsu-blog/images/hero.jpg" alt="メアのポイ活バナー ポイ活×招待コード×紹介系 一緒におトクをGETしよう" width="1179" height="393" />
 </div>
 
 <div class="pr-box">
-このページは広告（PR）を含みます。掲載している紹介リンク・紹介コードを使って各サービスに登録し、所定の条件を満たすと、メア（紹介者）に、各サービスの運営会社から紹介報酬が支払われる場合があります。紹介報酬が発生しても、あなたの特典が減ったり、利用料金が上乗せされたりすることはないので安心してね。仕組みと対象範囲は<a href="/ad-disclosure/">「広告・紹介報酬に関する表記」</a>にまとめています。
+このページは広告（PR）を含みます。掲載している紹介リンク・紹介コードを使って各サービスに登録し、所定の条件を満たすと、メア（紹介者）に、各サービスの運営会社から紹介報酬が支払われる場合があります。紹介報酬が発生しても、あなたの特典が減ったり、利用料金が上乗せされたりすることはないので安心してね。仕組みと対象範囲は<a href="/mea-poikatsu-blog/ad-disclosure/">「広告・紹介報酬に関する表記」</a>にまとめています。
 </div>
 
 <p class="article-meta">最終更新：2026年11月19日</p>
@@ -92,7 +92,7 @@ return (
 <td>{r.name}{r.featured? ' ⭐注目': ''}</td>
 <td>{r.benefit}</td>
 <td>{a.data.code?? 'リンク型'}</td>
-<td><a href={`/articles/${r.slug}/`}>詳細へ</a></td>
+<td><a href={`/mea-poikatsu-blog/articles/${r.slug}/`}>詳細へ</a></td>
 </tr>
 );
 })}
@@ -105,7 +105,7 @@ return (
 
 <h2 id="point-sites">ポイントサイトの紹介コード・招待コード一覧</h2>
 <p>ワラウ・ハピタス・モッピーはポイ活の王道3サイトだよ✨ 全部無料で登録して、案件ごとに一番高いサイトを使い分けるのが、メア流のコツです♪</p>
-<img src="/images/banner-pointsites.jpg" alt="ワラウ・ハピタス・モッピーの紹介コードバナー" loading="lazy" />
+<img src="/mea-poikatsu-blog/images/banner-pointsites.jpg" alt="ワラウ・ハピタス・モッピーの紹介コードバナー" loading="lazy" />
 <div class="card-grid">
 {byCategory('point-sites').filter((a) => slugOf(a.id) !== 'freecash').map((a) => <ServiceCard article={a} />)}
 </div>
@@ -160,25 +160,25 @@ return (
 <p>{f.a}</p>
 </div>
 ))}
-<p><a href="/faq/">よくある質問の一覧を見る →</a></p>
+<p><a href="/mea-poikatsu-blog/faq/">よくある質問の一覧を見る →</a></p>
 
 <h2>📂 カテゴリー</h2>
 <ul>
 {CATEGORIES.map((c) => (
-<li><a href={`/categories/${c.slug}/`}>{c.name}</a>（{byCategory(c.slug).length}）</li>
+<li><a href={`/mea-poikatsu-blog/categories/${c.slug}/`}>{c.name}</a>（{byCategory(c.slug).length}）</li>
 ))}
-<li><a href="/#ranking">特典ランキング</a>（11）</li>
-<li><a href="/faq/">よくある質問</a>（7）</li>
+<li><a href="/mea-poikatsu-blog/#ranking">特典ランキング</a>（11）</li>
+<li><a href="/mea-poikatsu-blog/faq/">よくある質問</a>（7）</li>
 </ul>
 
 <h2>🔥 人気の紹介コード</h2>
 <ul>
-<li><a href="/articles/freecash/">Freecash 3BQLXB</a> 約1,430円</li>
-<li><a href="/articles/rakuten-mobile/">楽天モバイル</a> 13,000pt</li>
-<li><a href="/articles/moppy/">モッピー 7xaGA123</a> 7,000P</li>
-<li><a href="/articles/tiktok/">TikTok 284097117</a> 6,000円分</li>
-<li><a href="/articles/warau/">ワラウ bEs7</a> 2,500pt</li>
-<li><a href="/articles/hapitas/">ハピタス INXAHV</a> 2,300円分</li>
+<li><a href="/mea-poikatsu-blog/articles/freecash/">Freecash 3BQLXB</a> 約1,430円</li>
+<li><a href="/mea-poikatsu-blog/articles/rakuten-mobile/">楽天モバイル</a> 13,000pt</li>
+<li><a href="/mea-poikatsu-blog/articles/moppy/">モッピー 7xaGA123</a> 7,000P</li>
+<li><a href="/mea-poikatsu-blog/articles/tiktok/">TikTok 284097117</a> 6,000円分</li>
+<li><a href="/mea-poikatsu-blog/articles/warau/">ワラウ bEs7</a> 2,500pt</li>
+<li><a href="/mea-poikatsu-blog/articles/hapitas/">ハピタス INXAHV</a> 2,300円分</li>
 </ul>
 
 <h2>🌐 全媒体の入口</h2>
@@ -186,7 +186,7 @@ return (
 
 <h2>🎀 このブログについて</h2>
 <p>ポイ活が大好きなメアが、私が実際に使っている紹介コードだけをまとめたブログだよ💖 特典額や条件が変わったら随時更新するね♪ まずは Freecash と ポイントサイト3つ から始めるのがおすすめだよ✨</p>
-<p><a href="/about/">運営者情報を見る →</a></p>
+<p><a href="/mea-poikatsu-blog/about/">運営者情報を見る →</a></p>
 
 <AdSlot />
 </div>
