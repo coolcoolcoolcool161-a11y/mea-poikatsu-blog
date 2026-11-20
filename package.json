@@ -1,1 +1,1 @@
-{"dependencies":{"astro":"^5.0.0"},"description":"ポイ活ブログ（メアのポイ活メディア）— 紹介コード・招待コードまとめ。Astro＋Markdown、Cloudflare Pagesで公開。","name":"mea-poikatsu-blog","private":true,"scripts":{"build":"astro build","dev":"astro dev","preview":"astro preview"},"type":"module","version":"1.0.0"}
+{"dependencies":{"@astrojs/sitemap":"^3.7.6","astro":"^5.0.0"},"description":"ポイ活ブログ（メアのポイ活メディア）— 紹介コード・招待コードまとめ。Astro＋Markdown、Cloudflare Pagesで公開。","name":"mea-poikatsu-blog","private":true,"scripts":{"build":"astro build","dev":"astro dev","preview":"astro preview"},"type":"module","version":"1.0.0"}
