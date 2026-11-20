@@ -1,0 +1,193 @@
+---
+import { getCollection} from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import AdSlot from '../components/AdSlot.astro';
+import { SITE, CATEGORIES, CATEGORY_NAMES, RANKING, FAQS, SISTER_BLOGS, slugOf } from '../data/site';
+
+const articles = await getCollection('articles');
+const bySlug = new Map(articles.map((a) => [slugOf(a.id), a]));
+const byCategory = (slug: string) => articles.filter((a) => a.data.category === slug);
+const freecash = bySlug.get('freecash')!;
+
+const itemList = [...RANKING].map((r, i) => ({
+'@type': 'ListItem',
+position: i + 1,
+name: `${r.name} ${r.benefit}`,
+}));
+// ランキング表に載っていない8サービスも一覧に追加（19件）
+const rankedSlugs = new Set(RANKING.map((r) => r.slug));
+const rest = articles
+.filter((a) => !rankedSlugs.has(slugOf(a.id)))
+.map((a) => `${a.data.service} ${a.data.code? `紹介コード ${a.data.code}`: ''} ${a.data.benefit}`);
+rest.forEach((name, i) => {
+itemList.push({ '@type': 'ListItem', position: RANKING.length + i + 1, name});
+});
+
+const jsonLd = {
+'@context': 'https://schema.org',
+'@graph': [
+{
+'@type': 'WebPage',
+name: '紹介コード・招待コードまとめ｜ポイ活',
+description: SITE.description,
+inLanguage: 'ja',
+dateModified: SITE.dateModified,
+},
+{ '@type': 'ItemList', name: '紹介コード・招待コード一覧', numberOfItems: 19, itemListElement: itemList},
+{
+'@type': 'FAQPage',
+mainEntity: FAQS.slice(0, 5).map((f) => ({
+'@type': 'Question',
+name: f.q,
+acceptedAnswer: { '@type': 'Answer', text: f.a},
+})),
+},
+{
+'@type': 'BreadcrumbList',
+itemListElement: [
+{ '@type': 'ListItem', position: 1, name: 'ポイ活ブログ トップ'},
+{ '@type': 'ListItem', position: 2, name: '紹介コード・招待コードまとめ'},
+],
+},
+],
+};
+
+const title = '紹介コード・招待コードまとめ｜ワラウ・ハピタス・モッピー・Freecash・TikTok・PayPay・楽天モバイル等の特典一覧';
+---
+
+<BaseLayout title={title} description={SITE.description} canonicalPath="/" jsonLd={jsonLd}>
+<div class="wrap">
+<div class="hero">
+<img src="/images/hero.jpg" alt="メアのポイ活バナー ポイ活×招待コード×紹介系 一緒におトクをGETしよう" width="1179" height="393" />
+</div>
+
+<div class="pr-box">
+このページは広告（PR）を含みます。掲載している紹介リンク・紹介コードを使って各サービスに登録し、所定の条件を満たすと、メア（紹介者）に、各サービスの運営会社から紹介報酬が支払われる場合があります。紹介報酬が発生しても、あなたの特典が減ったり、利用料金が上乗せされたりすることはないので安心してね。仕組みと対象範囲は<a href="/ad-disclosure/">「広告・紹介報酬に関する表記」</a>にまとめています。
+</div>
+
+<p class="article-meta">最終更新：2026年11月19日</p>
+
+<h1>紹介コード・招待コードまとめ💖 ポイ活は「紹介から登録」がいちばんお得だよ♪</h1>
+<p class="lead">
+はじめまして、メアです🎀 ポイントサイトやアプリに普通に登録しちゃうと、もらえるはずの特典がゼロになっちゃうことがあるの💦 だからこのページでは、ワラウ・ハピタス・モッピー・Freecash・TikTok・PayPay・楽天モバイル・サンポ・ぶたまる・ミラポイ・トクエル・dipsファームなど全19サービスの紹介コード・招待コード・特典額・達成条件・登録リンクを、メアがまとめてご紹介しています✨ コードはワンタップでコピーできるよ♪ 無言利用もOK、あなたの個人情報がメアに伝わることもないので安心してね💕
+</p>
+<div class="notice">
+⭐ メアからのお知らせ💖 今いちばんおすすめなのは Freecash（紹介コード：3BQLXB）だよ♪ ゲームを遊ぶだけで約1,430円相当がもらえちゃいます✨ ⭐
+</div>
+
+<AdSlot />
+
+<h2 id="ranking">🏆 紹介特典ランキング（特典額が大きい順）</h2>
+<table>
+<thead>
+<tr><th>順位</th><th>サービス</th><th>紹介特典</th><th>紹介コード</th><th></th></tr>
+</thead>
+<tbody>
+{RANKING.map((r) => {
+const a = bySlug.get(r.slug)!;
+return (
+<tr>
+<td>{r.rank}位</td>
+<td>{r.name}{r.featured? ' ⭐注目': ''}</td>
+<td>{r.benefit}</td>
+<td>{a.data.code?? 'リンク型'}</td>
+<td><a href={`/articles/${r.slug}/`}>詳細へ</a></td>
+</tr>
+);
+})}
+</tbody>
+</table>
+<p class="conditions">※特典額はキャンペーン条件をすべて達成した場合の最大値です。各サービスの条件は下のカードで必ずご確認ください。</p>
+
+<h2>⭐ イチオシ ― ゲームで稼ぐならコレ！</h2>
+<ServiceCard article={freecash} showBody={true} />
+
+<h2 id="point-sites">ポイントサイトの紹介コード・招待コード一覧</h2>
+<p>ワラウ・ハピタス・モッピーはポイ活の王道3サイトだよ✨ 全部無料で登録して、案件ごとに一番高いサイトを使い分けるのが、メア流のコツです♪</p>
+<img src="/images/banner-pointsites.jpg" alt="ワラウ・ハピタス・モッピーの紹介コードバナー" loading="lazy" />
+<div class="card-grid">
+{byCategory('point-sites').filter((a) => slugOf(a.id) !== 'freecash').map((a) => <ServiceCard article={a} />)}
+</div>
+
+<h2 id="sns-video">TikTok・TikTok Liteの招待コード</h2>
+<p>動画を見るだけ・登録するだけで報酬がもらえる系だよ🎬 登録時は Wi-FiをOFFにしてモバイル通信で、招待URLを直接開くのが失敗しないコツ♪ メアもこの方法でバッチリでした✨</p>
+<div class="card-grid">
+{byCategory('sns-video').map((a) => <ServiceCard article={a} />)}
+</div>
+
+<AdSlot />
+
+<h2 id="payment-bank">決済・銀行・通信の紹介コード（PayPay・楽天モバイル・SMBC Olive）</h2>
+<p>普段使うお金まわりのサービスこそ、紹介特典が大きいジャンルなの💰 楽天モバイルは最大13,000ポイントで、全サービス中トップだよ✨</p>
+<div class="card-grid">
+{byCategory('payment-bank').map((a) => <ServiceCard article={a} />)}
+</div>
+
+<h2 id="others">オリくじ・ポケカツ・Museの招待コード</h2>
+<p>オンラインオリパ系の2サービスとAIアシスタントだよ🎁 0円でも楽しめるものもあるので、まずは無料分から気軽にどうぞ♪</p>
+<div class="card-grid">
+{byCategory('others').map((a) => <ServiceCard article={a} />)}
+</div>
+
+<h2 id="new-apps">🆕 新着ポイ活アプリの招待コード（サンポ・ぶたまる・ミラポイ・トクエル・dipsファーム）</h2>
+<p>メアが新しく追加した5つのポイ活アプリだよ🆕 どれも無料で始められます♪ 登録する前に、下のカードで招待コードをコピーしておくのがおすすめです💖</p>
+<div class="card-grid">
+{byCategory('new-apps').map((a) => <ServiceCard article={a} />)}
+</div>
+
+<h2 id="howto">紹介コードで損しないための使い方・始め方</h2>
+<p>ポイ活初心者さんがつまずきやすいのは「登録してからコードを探す」パターン💦 特典は登録時だけが対象のことがほとんどだから、先にチェックしてね♪</p>
+<ol class="steps">
+<li><strong>先にコードをコピー</strong>：気になるサービスのカードで紹介コードをコピーしておきます。リンク型はそのまま次のステップへ。</li>
+<li><strong>紹介リンクから登録</strong>：必ずこのページの登録ボタンから進んで登録してください。公式サイトから直接登録すると紹介特典が付かない場合があります。</li>
+<li><strong>条件を確認して達成</strong>：広告利用・支払い・発信通話など、特典条件は各カードに記載。期限があるものは早めに済ませましょう。</li>
+<li><strong>ポイントを受け取る</strong>：条件達成後、各サービスのマイページで付与を確認。ポイントは現金・電子マネー・ギフト券などに交換できます。</li>
+</ol>
+
+<h2 id="sisters">姉妹ブログ｜同じ紹介コードを、違う見方で</h2>
+<p>このブログと同じ19サービスの紹介コードを、見た目や使い方が違う5つの姉妹ブログでも掲載しているよ📚 自分に合った探し方でどうぞ♪ どのブログから登録しても特典は同じだから安心してね💕</p>
+<ul>
+{SISTER_BLOGS.map((b) => (
+<li><a href={b.url} target="_blank" rel="noopener">{b.name}</a>：{b.note}</li>
+))}
+</ul>
+
+<h2 id="faq">よくある質問｜紹介コード・ポイ活の疑問</h2>
+{FAQS.map((f) => (
+<div class="faq-item">
+<h3>{f.q}</h3>
+<p>{f.a}</p>
+</div>
+))}
+<p><a href="/faq/">よくある質問の一覧を見る →</a></p>
+
+<h2>📂 カテゴリー</h2>
+<ul>
+{CATEGORIES.map((c) => (
+<li><a href={`/categories/${c.slug}/`}>{c.name}</a>（{byCategory(c.slug).length}）</li>
+))}
+<li><a href="/#ranking">特典ランキング</a>（11）</li>
+<li><a href="/faq/">よくある質問</a>（7）</li>
+</ul>
+
+<h2>🔥 人気の紹介コード</h2>
+<ul>
+<li><a href="/articles/freecash/">Freecash 3BQLXB</a> 約1,430円</li>
+<li><a href="/articles/rakuten-mobile/">楽天モバイル</a> 13,000pt</li>
+<li><a href="/articles/moppy/">モッピー 7xaGA123</a> 7,000P</li>
+<li><a href="/articles/tiktok/">TikTok 284097117</a> 6,000円分</li>
+<li><a href="/articles/warau/">ワラウ bEs7</a> 2,500pt</li>
+<li><a href="/articles/hapitas/">ハピタス INXAHV</a> 2,300円分</li>
+</ul>
+
+<h2>🌐 全媒体の入口</h2>
+<p><a href={SITE.hubUrl} target="_blank" rel="noopener">メアのポイ活メディア（トップページ）</a> — ホームページ・ブログ・掲示板・note・Xなど、メアの媒体はここからたどれます♪</p>
+
+<h2>🎀 このブログについて</h2>
+<p>ポイ活が大好きなメアが、私が実際に使っている紹介コードだけをまとめたブログだよ💖 特典額や条件が変わったら随時更新するね♪ まずは Freecash と ポイントサイト3つ から始めるのがおすすめだよ✨</p>
+<p><a href="/about/">運営者情報を見る →</a></p>
+
+<AdSlot />
+</div>
+</BaseLayout>
