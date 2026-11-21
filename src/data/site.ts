@@ -6,7 +6,7 @@ export const SITE = {
   siteUrl: 'https://coolcoolcoolcool161-a11y.github.io/mea-poikatsu-blog',
   description:
     'ポイ活の紹介コード・招待コードを全19サービス分まとめて掲載。Freecash 3BQLXB（約1,430円相当）、ワラウ最大2,500pt、ハピタス最大2,300円分、モッピー最大7,000P、TikTok 6,000円分、楽天モバイル最大13,000ポイントなど、特典額・条件・登録リンク・コピーボタン付きで比較できます。',
-  dateModified: '2026-11-19',
+  dateModified: '2026-11-21',
   gaMeasurementId: 'G-8BB8V3DRW8',
   xAccount: 'https://x.com/pppppuririn',
   hubUrl:
