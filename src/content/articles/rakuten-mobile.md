@@ -8,6 +8,7 @@ url: "https://r10.to/hgZk3d"
 image: "/images/banner-rakuten.jpg"
 imageAlt: "楽天モバイル紹介キャンペーンのバナー"
 dateModified: "2026-11-19"
+conditions: "初めての申込が対象です。他社から乗り換え（MNP）なら13,000ポイント、乗り換え以外なら12,000ポイントです。"
 ---
 
 ## 楽天モバイルとは

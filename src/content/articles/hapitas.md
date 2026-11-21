@@ -9,6 +9,7 @@ url: "https://hapitas.jp/appinvite?i=26164523"
 image: "/images/banner-official-hapitas.png"
 imageAlt: "ハピタス公式バナー"
 dateModified: "2026-11-19"
+conditions: "紹介URLから登録してください（コード入力は不要です）。登録と条件達成で最大2,300P（1P＝1円）です。"
 ---
 
 ## ハピタスとは

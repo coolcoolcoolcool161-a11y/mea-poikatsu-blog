@@ -8,6 +8,7 @@ code: "MEAPOI"
 url: "https://dips.underduck.io/farm/invite"
 image: "/images/banner-dips.jpg"
 dateModified: "2026-11-19"
+conditions: "招待コードは登録から24時間以内に入力してください。入力で水1,000gと高級肥料10個がもらえます。"
 ---
 
 ## dipsファームとは

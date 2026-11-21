@@ -8,6 +8,7 @@ code: "JUTN9FH"
 url: "https://app.moneypig.gy/friend_code?friend_code=JUTN9FH"
 image: "/images/banner-butamaru.jpg"
 dateModified: "2026-11-19"
+conditions: "招待コード入力とブタップ10回、アカウント作成で500pt（50円相当）がもらえます。"
 ---
 
 ## ぶたまる（マネーピッグ）とは

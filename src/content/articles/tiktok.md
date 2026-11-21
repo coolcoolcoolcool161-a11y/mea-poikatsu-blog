@@ -9,6 +9,7 @@ url: "https://www.tiktok.com/d/2/ZS9f73DUaTHEE-3fczb/"
 image: "/images/banner-tiktok.jpg"
 imageAlt: "TikTok・TikTok Lite招待コードのバナー"
 dateModified: "2026-11-19"
+conditions: "新規登録と条件達成が対象です。登録時はWi-FiをOFFにしてモバイル通信で、招待URLを直接開いてください。"
 ---
 
 ## TikTokとは

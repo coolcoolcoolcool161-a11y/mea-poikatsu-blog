@@ -9,6 +9,7 @@ url: "https://www.warau.jp/friend/reg/bEs5"
 image: "/images/banner-official-warau.png"
 imageAlt: "ワラウ公式バナー"
 dateModified: "2026-11-19"
+conditions: "紹介リンクから登録すると自動適用されます。1pt＝1円、300ptから交換できます。"
 ---
 
 ## ワラウとは
