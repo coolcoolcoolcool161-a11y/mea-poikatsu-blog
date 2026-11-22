@@ -58,8 +58,8 @@ export const CODE_TABLE_ORDER = [
 // 姉妹ブログ（旧muse.ai URL。2026-11-21にGitHub Pagesの新URLへ更新済み）
 export const SISTER_BLOGS = [
   {
-    name: '紹介コードランキング',
-    note: '特典額の大きい順に並べたランキング形式。まず一番お得なものから選びたい方に。',
+    name: 'おすすめ紹介コード',
+    note: 'メアのおすすめ順に並べた紹介コード案内。まずおすすめから選びたい方に。',
     url: 'https://coolcoolcoolcool161-a11y.github.io/mea-ranking/',
   },
   {

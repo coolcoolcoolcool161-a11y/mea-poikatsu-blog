@@ -3,7 +3,7 @@ title: "ポケカツの招待コード 2BGZ325P｜合計1,300円分楽しめる�
 description: "新規オープンしたオンラインオリパ。目玉はスロットガチャ。新規オープン記念でまずは500円無料！50円で1,000円分、LINE連携で300円分、合計1,300円分楽しめます。"
 service: "ポケカツ"
 category: others
-benefit: "合計1,300円分"
+benefit: "新規登録特典（初回チャージ最大92%OFF＋500コイン、LINE追加300コイン）"
 code: "2BGZ325P"
 image: "/images/banner-pokekatsu.jpg"
 dateModified: "2026-11-19"
