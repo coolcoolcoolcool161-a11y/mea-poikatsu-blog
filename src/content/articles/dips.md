@@ -7,7 +7,7 @@ benefit: "水1,000g＋高級肥料10個"
 code: "MEAPOI"
 url: "https://dips.underduck.io/farm/invite"
 image: "/images/banner-dips.jpg"
-dateModified: "2026-11-19"
+dateModified: "2026-11-23"
 conditions: "招待コードは登録から24時間以内に入力してください。入力で水1,000gと高級肥料10個がもらえます。"
 ---
 
@@ -18,6 +18,8 @@ conditions: "招待コードは登録から24時間以内に入力してくだ�
 ## メア特別コード特典
 
 - **メア特別コード入力で水1,000g＋高級肥料10個**
+- **友達招待コード「9RNR7N」も入力すると高級肥料5個**
+- 2つのコードは両方入力できるので、両方入れるのがお得です
 
 ## 交換先
 
