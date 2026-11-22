@@ -1,14 +1,18 @@
 ---
-title: "dipsファームの招待コード MEAPOI｜水1,000g＋高級肥料10個・育ててギフトカードに挑戦"
+title: "dipsファームの招待コード MEAPOI＋9RNR7N｜両方入力で水1,000g＋高級肥料15個・育ててギフトカードに挑戦"
 description: "好きな作物を選んで毎日水をあげて育てると本物のギフトカードに挑戦できる無料ゲーム。メア特別コード入力で水1,000g＋高級肥料10個。登録から24時間以内にコードを入力してください。"
 service: "dipsファーム（dips）"
 category: new-apps
-benefit: "水1,000g＋高級肥料10個"
+benefit: "水1,000g＋高級肥料15個（2コード両方入力）"
 code: "MEAPOI"
+codeLabel: "メア特別コード"
+code2: "9RNR7N"
+code2Label: "友達招待コード"
 url: "https://dips.underduck.io/farm/invite"
 image: "/images/banner-dips.jpg"
 dateModified: "2026-11-23"
-conditions: "招待コードは登録から24時間以内に入力してください。入力で水1,000gと高級肥料10個がもらえます。"
+verified: "2026-11-23"
+conditions: "メア特別コードMEAPOIは登録から24時間以内に入力で水1,000g＋高級肥料10個。友達招待コード9RNR7Nも入力すると高級肥料5個が追加でもらえます（両方入力可）。"
 ---
 
 ## dipsファームとは

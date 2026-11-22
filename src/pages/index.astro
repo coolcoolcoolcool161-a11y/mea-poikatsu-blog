@@ -3,25 +3,20 @@ import { getCollection} from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import AdSlot from '../components/AdSlot.astro';
-import { SITE, CATEGORIES, CATEGORY_NAMES, RANKING, FAQS, SISTER_BLOGS, slugOf } from '../data/site';
+import { SITE, CATEGORIES, CATEGORY_NAMES, CODE_TABLE_ORDER, FAQS, SISTER_BLOGS, slugOf } from '../data/site';
 
 const articles = await getCollection('articles');
 const bySlug = new Map(articles.map((a) => [slugOf(a.id), a]));
 const byCategory = (slug: string) => articles.filter((a) => a.data.category === slug);
 const freecash = bySlug.get('freecash')!;
 
-const itemList = [...RANKING].map((r, i) => ({
+const itemList = CODE_TABLE_ORDER.map((slug, i) => {
+const a = bySlug.get(slug)!;
+return {
 '@type': 'ListItem',
 position: i + 1,
-name: `${r.name} ${r.benefit}`,
-}));
-// ランキング表に載っていない8サービスも一覧に追加（19件）
-const rankedSlugs = new Set(RANKING.map((r) => r.slug));
-const rest = articles
-.filter((a) => !rankedSlugs.has(slugOf(a.id)))
-.map((a) => `${a.data.service} ${a.data.code? `紹介コード ${a.data.code}`: ''} ${a.data.benefit}`);
-rest.forEach((name, i) => {
-itemList.push({ '@type': 'ListItem', position: RANKING.length + i + 1, name});
+name: `${a.data.service} ${a.data.code ? `紹介コード ${a.data.code}` : ''} ${a.data.benefit}`,
+};
 });
 
 const jsonLd = {
@@ -66,7 +61,7 @@ const title = '紹介コード・招待コードまとめ｜ワラウ・ハピ�
 このページは広告（PR）を含みます。掲載している紹介リンク・紹介コードを使って各サービスに登録し、所定の条件を満たすと、メア（紹介者）に、各サービスの運営会社から紹介報酬が支払われる場合があります。紹介報酬が発生しても、あなたの特典が減ったり、利用料金が上乗せされたりすることはないので安心してね。仕組みと対象範囲は<a href="/mea-poikatsu-blog/ad-disclosure/">「広告・紹介報酬に関する表記」</a>にまとめています。
 </div>
 
-<p class="article-meta">最終更新：2026年11月19日</p>
+<p class="article-meta">最終更新：2026年11月23日</p>
 
 <h1>紹介コード・招待コードまとめ💖 ポイ活は「紹介から登録」がいちばんお得だよ♪</h1>
 <p class="lead">
@@ -78,27 +73,31 @@ const title = '紹介コード・招待コードまとめ｜ワラウ・ハピ�
 
 <AdSlot position="top" />
 
-<h2 id="ranking">🏆 紹介特典ランキング（特典額が大きい順）</h2>
+<h2 id="code-table">📋 紹介コード一覧表（メアのおすすめ順）</h2>
+<p>全19サービスの紹介コード・特典・条件要点を、メアのおすすめ順に一覧にしたよ♪ 特典や条件は変わることがあるから、登録前に各サービスの公式案内も確認してね。</p>
+<div class="table-scroll">
 <table>
 <thead>
-<tr><th>順位</th><th>サービス</th><th>紹介特典</th><th>紹介コード</th><th></th></tr>
+<tr><th>順位</th><th>サービス</th><th>紹介コード</th><th>特典</th><th>条件要点</th><th>最終確認日</th><th></th></tr>
 </thead>
 <tbody>
-{RANKING.map((r) => {
-const a = bySlug.get(r.slug)!;
+{CODE_TABLE_ORDER.map((slug, i) => {
+const a = bySlug.get(slug)!;
 return (
 <tr>
-<td>{r.rank}位</td>
-<td>{r.name}{r.featured? ' ⭐注目': ''}</td>
-<td>{r.benefit}</td>
-<td>{a.data.code?? 'リンク型'}</td>
-<td><a href={`/mea-poikatsu-blog/articles/${r.slug}/`}>詳細へ</a></td>
+<td>{i + 1}</td>
+<td>{a.data.service}</td>
+<td>{a.data.code ? (a.data.code2 ? `${a.data.code}／${a.data.code2}` : a.data.code) : 'リンク型'}</td>
+<td>{a.data.benefit}</td>
+<td>{a.data.conditions ?? '—'}</td>
+<td>{a.data.verified ?? a.data.dateModified}</td>
+<td><a href={`/mea-poikatsu-blog/articles/${slug}/`}>詳細へ</a></td>
 </tr>
 );
 })}
 </tbody>
 </table>
-<p class="conditions">※特典額はキャンペーン条件をすべて達成した場合の最大値です。各サービスの条件は下のカードで必ずご確認ください。</p>
+</div>
 
 <h2>⭐ イチオシ ― ゲームで稼ぐならコレ！</h2>
 <ServiceCard article={freecash} showBody={true} />
@@ -167,7 +166,7 @@ return (
 {CATEGORIES.map((c) => (
 <li><a href={`/mea-poikatsu-blog/categories/${c.slug}/`}>{c.name}</a>（{byCategory(c.slug).length}）</li>
 ))}
-<li><a href="/mea-poikatsu-blog/#ranking">特典ランキング</a>（11）</li>
+<li><a href="/mea-poikatsu-blog/#code-table">紹介コード一覧表</a>（19）</li>
 <li><a href="/mea-poikatsu-blog/faq/">よくある質問</a>（7）</li>
 </ul>
 

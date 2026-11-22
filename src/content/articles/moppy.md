@@ -9,6 +9,7 @@ url: "https://pc.moppy.jp/entry/invite.php?invite=7xaGA123"
 image: "/images/banner-official-moppy.jpg"
 imageAlt: "モッピー公式バナー"
 dateModified: "2026-11-19"
+verified: "2026-11-23"
 conditions: "新規登録と広告利用5,000P以上の達成で、最大7,000Pがもらえます。"
 ---
 

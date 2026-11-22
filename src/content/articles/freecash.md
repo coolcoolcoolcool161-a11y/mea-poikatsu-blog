@@ -9,6 +9,7 @@ url: "https://freecash.com/r/3BQLXB"
 image: "/images/banner-freecash.jpg"
 imageAlt: "Freecash 紹介コード 3BQLXB バナー"
 dateModified: "2026-11-19"
+verified: "2026-11-21"
 featured: true
 conditions: "紹介リンクから新規登録し、対象ゲームをプレイして条件を達成すると約1,430円相当がもらえます。"
 ---

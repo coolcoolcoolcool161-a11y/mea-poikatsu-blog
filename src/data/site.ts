@@ -6,7 +6,7 @@ export const SITE = {
   siteUrl: 'https://coolcoolcoolcool161-a11y.github.io/mea-poikatsu-blog',
   description:
     'ポイ活の紹介コード・招待コードを全19サービス分まとめて掲載。Freecash 3BQLXB（約1,430円相当）、ワラウ最大2,500pt、ハピタス最大2,300円分、モッピー最大7,000P、TikTok 6,000円分、楽天モバイル最大13,000ポイントなど、特典額・条件・登録リンク・コピーボタン付きで比較できます。',
-  dateModified: '2026-11-21',
+  dateModified: '2026-11-23',
   gaMeasurementId: 'G-8BB8V3DRW8',
   xAccount: 'https://x.com/pppppuririn',
   hubUrl:
@@ -30,19 +30,29 @@ export const CATEGORY_NAMES: Record<string, string> = Object.fromEntries(
   CATEGORIES.map((c) => [c.slug, c.name]),
 );
 
-// 特典ランキング（旧サイトの表と同じ順序・金額で移行）
-export const RANKING = [
-  { rank: 1, slug: 'rakuten-mobile', name: '楽天モバイル', benefit: '最大13,000pt' },
-  { rank: 2, slug: 'moppy', name: 'モッピー', benefit: '最大7,000P' },
-  { rank: 3, slug: 'tiktok', name: 'TikTok', benefit: '6,000円分' },
-  { rank: 4, slug: 'warau', name: 'ワラウ', benefit: '最大2,500pt' },
-  { rank: 5, slug: 'hapitas', name: 'ハピタス', benefit: '最大2,300円分' },
-  { rank: 6, slug: 'olive', name: 'SMBC Olive', benefit: '1,000円相当' },
-  { rank: 7, slug: 'tiktok-lite', name: 'TikTok Lite', benefit: '1,400円分' },
-  { rank: 8, slug: 'freecash', name: 'Freecash', benefit: '約1,430円相当', featured: true },
-  { rank: 9, slug: 'mercari', name: 'メルカリ', benefit: '500円分' },
-  { rank: 10, slug: 'paypay', name: 'PayPay', benefit: '300pt' },
-  { rank: 11, slug: 'airwallet', name: 'エアウォレット', benefit: 'Ponta 300pt' },
+// 紹介コード一覧表の表示順＝おすすめ順位（2026-11-23 全運営一新バッチ2）
+// 旧「特典額ランキング（大きい順）」は廃止し、おすすめ順の統一コード表に統合した。
+// ①Freecash ②ワラウ ③TikTok系統（本家→Lite） ④モッピー ⑤ハピタス ⑥その他
+export const CODE_TABLE_ORDER = [
+  'freecash',
+  'warau',
+  'tiktok',
+  'tiktok-lite',
+  'moppy',
+  'hapitas',
+  'orikuji',
+  'pokekatsu',
+  'rakuten-mobile',
+  'airwallet',
+  'muse',
+  'sampo',
+  'butamaru',
+  'mirapoi',
+  'tokueru',
+  'dips',
+  'mercari',
+  'paypay',
+  'olive',
 ] as const;
 
 // 姉妹ブログ（旧muse.ai URL。2026-11-21にGitHub Pagesの新URLへ更新済み）

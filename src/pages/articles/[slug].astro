@@ -83,26 +83,8 @@ const jsonLd = {
     {restHtml && <div class="article-extra" set:html={restHtml} />}
 
     <section class="article-end-cta">
-      <h2>{data.service}の特典と紹介コード</h2>
-      <div class="benefit-badge">
-        <span class="benefit-label">登録者特典</span>
-        <span class="benefit-value">{data.benefit}</span>
-      </div>
-      {data.code ? (
-        <div class="code-row">
-          <code>{data.code}</code>
-          <button class="copy-btn" type="button" data-copy={data.code} data-service={slugOf(article.id)}>
-            <span class="copy-label">コピー</span>
-          </button>
-        </div>
-      ) : (
-        <p class="conditions">紹介コードはありません。紹介リンクから登録してください。</p>
-      )}
-      {data.conditions ? (
-        <p class="conditions">{data.conditions}</p>
-      ) : (
-        <p class="conditions">条件・注意事項は上の記事本文で確認してから登録してください。</p>
-      )}
+      <h2>{data.service}の登録はこちら</h2>
+      <p class="conditions">特典・紹介コード・条件は、上のカードと記事本文で確認してから登録してね。</p>
       {data.url ? (
         <a class="register-btn" href={data.url} target="_blank" rel="sponsored noopener" data-service={slugOf(article.id)} data-position="article_bottom">
           無料で登録する
