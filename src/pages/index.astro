@@ -7,7 +7,12 @@ import { SITE, CATEGORIES, CATEGORY_NAMES, CODE_TABLE_ORDER, FAQS, SISTER_BLOGS,
 
 const articles = await getCollection('articles');
 const bySlug = new Map(articles.map((a) => [slugOf(a.id), a]));
-const byCategory = (slug: string) => articles.filter((a) => a.data.category === slug);
+// カテゴリ別カードもおすすめ順（CODE_TABLE_ORDER）に並べる
+const orderIndex = new Map(CODE_TABLE_ORDER.map((s, i) => [s, i]));
+const byCategory = (slug: string) =>
+  articles
+    .filter((a) => a.data.category === slug)
+    .sort((a, b) => (orderIndex.get(slugOf(a.id)) ?? 99) - (orderIndex.get(slugOf(b.id)) ?? 99));
 const freecash = bySlug.get('freecash')!;
 
 const itemList = CODE_TABLE_ORDER.map((slug, i) => {
