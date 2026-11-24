@@ -1,14 +1,14 @@
 ---
-title: "エアウォレットの紹介コード qpgtg29｜新規登録でPonta 300pt"
-description: "銀行口座間の送金が手数料無料でできる便利なアプリ。登録は無料、スマホひとつで簡単に利用できます。紹介リンクから登録するとPontaポイント300ポイントがもらえます。"
+title: "エアウォレットの紹介コード 6nzih9k｜新規登録で300円分"
+description: "銀行口座間の送金が手数料無料でできる便利なアプリ。登録は無料、スマホひとつで簡単に利用できます。紹介リンクから登録するとCOIN+残高300円分がもらえます。"
 service: "エアウォレット"
 category: payment-bank
-benefit: "Ponta 300pt"
-code: "qpgtg29"
-url: "https://point.recruit.co.jp/recruitid/doc/campaign/aw/airwallet202610_invitation/W7nd8/?vos=wercdSGCbnrlink20250121621"
+benefit: "300円分"
+code: "6nzih9k"
+url: "https://coinplus.go.link/jH372"
 image: "/images/banner-airwallet.jpg"
-dateModified: "2026-11-19"
-conditions: "紹介リンクから新規登録してください。新規登録でPonta 300ptがもらえます。"
+dateModified: "2026-11-24"
+conditions: "招待コードを入力して新規登録し、リクルートID連携・本人確認を完了するとCOIN+残高300円分がもらえます。"
 ---
 
 ## エアウォレットとは
@@ -17,7 +17,7 @@ conditions: "紹介リンクから新規登録してください。新規登録�
 
 ## 紹介特典
 
-- **新規登録でPontaポイント300ポイント**
+- **新規登録でCOIN+残高300円分**
 
 ## おすすめポイント
 
