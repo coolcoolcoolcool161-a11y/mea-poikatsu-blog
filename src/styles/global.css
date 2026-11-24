@@ -414,3 +414,24 @@ tbody tr:hover { background: #fff0f5; }
    本文 = LINE Seed JP（Webフォント）/ 見出し = 丸ゴシック系（S07のみ角ゴシック） */
 h1, h2, h3, .brand { font-family: var(--font-heading); }
 h1, .brand { font-weight: 900; }
+
+/* === S02再構築：悩み列挙・番号リスト＋Q&A型（2026-11-25） === */
+.worry-list { list-style: none; padding: 0; margin: 16px 0; display: grid; gap: 12px; }
+.worry-item { display: flex; gap: 12px; align-items: flex-start; background: var(--gradient-soft, #fff); border: var(--border-card); border-radius: var(--radius-md); box-shadow: var(--shadow-card); padding: 14px 16px; }
+.worry-no { flex-shrink: 0; width: 40px; height: 40px; border-radius: 50%; background: var(--gradient-primary); color: #fff; font-family: var(--font-heading); font-weight: 900; font-size: 1.15rem; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-raised); }
+.worry-body { min-width: 0; }
+.worry-q { margin: 2px 0 4px; font-weight: 700; font-size: 1.02rem; line-height: 1.5; }
+.worry-hint { margin: 0 0 6px; font-size: var(--text-sm); color: var(--color-text-muted); }
+.worry-link { font-weight: 700; font-size: var(--text-sm); }
+.qa-item { border: var(--border-card); border-radius: var(--radius-md); padding: 14px 16px; margin: 12px 0; background: #fff; box-shadow: var(--shadow-card); }
+.qa-item h3 { margin: 0 0 8px; font-size: 1.05rem; display: flex; gap: 8px; align-items: flex-start; }
+.qa-item p { margin: 0; display: flex; gap: 8px; align-items: flex-start; }
+.qa-mark { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; color: #fff; font-size: 0.8rem; font-weight: 900; display: inline-flex; align-items: center; justify-content: center; margin-top: 2px; }
+.qa-q { background: var(--color-primary-strong); }
+.qa-a { background: var(--color-board); }
+.qa-item .qa-more { display: block; margin-top: 8px; font-size: var(--text-sm); font-weight: 700; }
+.all-list { list-style: none; padding: 0; margin: 12px 0; display: grid; gap: 8px; }
+.all-list li { display: flex; flex-wrap: wrap; gap: 2px 10px; align-items: baseline; background: #fff; border: var(--border-card); border-radius: var(--radius-sm); padding: 8px 12px; }
+.all-list a { font-weight: 700; }
+.all-benefit { color: var(--color-benefit-text); font-weight: 700; font-size: var(--text-sm); }
+.all-code { color: var(--color-text-muted); font-size: var(--text-sm); font-family: var(--font-code); }

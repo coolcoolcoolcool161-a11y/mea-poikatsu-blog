@@ -61,7 +61,7 @@ const imgSize = data.image ? IMG_DIMS[data.image] : undefined;
   {showBody && <Content />}
   {data.conditions && <p class="conditions">{data.conditions}</p>}
   {data.url ? (
-    <a class="register-btn" href={data.url} target="_blank" rel="sponsored noopener" data-service={slug} data-position={ctaPosition}>
+    <a class="register-btn" href={data.url} target="_blank" rel="sponsored noopener" data-service={slug} data-position={ctaPosition} data-ref-service={slug} data-ref-placement={ctaPosition}>
       無料で登録する
     </a>
   ) : data.officialSite ? (

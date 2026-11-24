@@ -1,65 +1,140 @@
 ---
-import { getCollection} from 'astro:content';
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import AdSlot from '../components/AdSlot.astro';
-import { SITE, CATEGORIES, CATEGORY_NAMES, CODE_TABLE_ORDER, FAQS, SISTER_BLOGS, slugOf } from '../data/site';
+import { SITE, CATEGORIES, CODE_TABLE_ORDER, FAQS, SISTER_BLOGS, slugOf } from '../data/site';
 
 const articles = await getCollection('articles');
 const bySlug = new Map(articles.map((a) => [slugOf(a.id), a]));
-// カテゴリ別カードもおすすめ順（CODE_TABLE_ORDER）に並べる
-const orderIndex = new Map(CODE_TABLE_ORDER.map((s, i) => [s, i]));
-const byCategory = (slug: string) =>
-  articles
-    .filter((a) => a.data.category === slug)
-    .sort((a, b) => (orderIndex.get(slugOf(a.id)) ?? 99) - (orderIndex.get(slugOf(b.id)) ?? 99));
-const freecash = bySlug.get('freecash')!;
+const byCategory = (slug: string) => articles.filter((a) => a.data.category === slug);
+
+// おすすめ導線の表示順（全運営共通のおすすめ優先度）
+const PRIORITY = ['freecash', 'warau', 'tiktok', 'tiktok-lite', 'moppy', 'hapitas'] as const;
+
+// 悩み列挙（このサイトの主役）：来訪者の言葉で書き、各悩みに対応する既存記事へつなぐ
+const WORRIES = [
+  {
+    q: '登録したのに、紹介特典がもらえなかった…',
+    hint: '条件を1つでも外すと対象外になることが多いよ。もらえない原因と確認ポイントをまとめました。',
+    slug: 'moppy',
+    label: 'モッピー',
+  },
+  {
+    q: 'どのポイントサイトから始めるのが正解か分からない',
+    hint: 'まずは王道のポイントサイトから始めるのが失敗しにくいよ。',
+    slug: 'warau',
+    label: 'ワラウ',
+  },
+  {
+    q: '招待コードって、どこに入力すればいいの？',
+    hint: 'サービスごとに入力する場所が違います。登録画面で迷いやすい代表例はこちら。',
+    slug: 'paypay',
+    label: 'PayPay',
+  },
+  {
+    q: 'TikTokの招待がうまく反映されない…',
+    hint: '招待URLの開き方にコツがあります。失敗しやすいパターンも紹介。',
+    slug: 'tiktok',
+    label: 'TikTok',
+  },
+  {
+    q: '紹介した人に、自分の名前や契約情報がバレないか心配',
+    hint: '紹介を受けた人の契約情報が、紹介した人に伝わることはありません。',
+    slug: 'rakuten-mobile',
+    label: '楽天モバイル',
+  },
+  {
+    q: 'もう登録しちゃった…後から紹介コードは入れられない？',
+    hint: 'ほとんどのサービスは新規登録のときだけが対象です。例外の考え方もまとめました。',
+    slug: 'faq',
+    label: 'よくある質問',
+  },
+  {
+    q: 'ポイントサイトは何個も登録していいの？使い分けはどうするの？',
+    hint: '複数登録して、案件ごとに一番お得なサイトを使い分けるのが定番だよ。',
+    slug: 'hapitas',
+    label: 'ハピタス',
+  },
+  {
+    q: 'ゲームで稼げるって本当？怪しくない？',
+    hint: '無料で始められる仕組みと、もらえる特典の中身を先に確認してね。',
+    slug: 'freecash',
+    label: 'Freecash',
+  },
+  {
+    q: '歩くだけでポイントが貯まるって本当？',
+    hint: '歩数でポイントが貯まるアプリの仕組みと、招待コードの特典はこちら。',
+    slug: 'sampo',
+    label: 'サンポ',
+  },
+  {
+    q: '銀行口座や決済アプリでも、紹介特典ってあるの？',
+    hint: '普段使うお金まわりのサービスは、紹介特典が大きめのジャンルだよ。',
+    slug: 'olive',
+    label: 'SMBC Olive',
+  },
+] as const;
+
+const worryHref = (slug: string) =>
+  slug === 'faq' ? '/mea-poikatsu-blog/faq/' : `/mea-poikatsu-blog/articles/${slug}/`;
+
+// Q&Aの「詳しくは」リンク（FAQSの並び順に対応）
+const FAQ_MORE = [
+  { href: '/mea-poikatsu-blog/articles/moppy/', label: 'モッピー' },
+  { href: '/mea-poikatsu-blog/articles/warau/', label: 'ワラウ' },
+  { href: '/mea-poikatsu-blog/articles/rakuten-mobile/', label: '楽天モバイル' },
+  { href: '/mea-poikatsu-blog/articles/freecash/', label: 'Freecash' },
+  { href: '/mea-poikatsu-blog/faq/', label: 'よくある質問' },
+  { href: '/mea-poikatsu-blog/articles/tiktok/', label: 'TikTok' },
+  { href: '/mea-poikatsu-blog/ad-disclosure/', label: '広告・紹介報酬に関する表記' },
+] as const;
 
 const itemList = CODE_TABLE_ORDER.map((slug, i) => {
-const a = bySlug.get(slug)!;
-return {
-'@type': 'ListItem',
-position: i + 1,
-name: `${a.data.service} ${a.data.code ? `紹介コード ${a.data.code}` : ''} ${a.data.benefit}`,
-};
+  const a = bySlug.get(slug)!;
+  return {
+    '@type': 'ListItem',
+    position: i + 1,
+    name: `${a.data.service} ${a.data.code ? `紹介コード ${a.data.code}` : ''} ${a.data.benefit}`,
+  };
 });
 
 const jsonLd = {
-'@context': 'https://schema.org',
-'@graph': [
-{
-'@type': 'WebPage',
-name: '紹介コード・招待コードまとめ｜ポイ活',
-description: SITE.description,
-inLanguage: 'ja',
-dateModified: SITE.dateModified,
-},
-{ '@type': 'ItemList', name: '紹介コード・招待コード一覧', numberOfItems: 19, itemListElement: itemList},
-{
-'@type': 'FAQPage',
-mainEntity: FAQS.slice(0, 5).map((f) => ({
-'@type': 'Question',
-name: f.q,
-acceptedAnswer: { '@type': 'Answer', text: f.a},
-})),
-},
-{
-'@type': 'BreadcrumbList',
-itemListElement: [
-{ '@type': 'ListItem', position: 1, name: 'ポイ活レビュー帖 トップ', item: SITE.siteUrl + '/'},
-{ '@type': 'ListItem', position: 2, name: '紹介コード・招待コードまとめ', item: SITE.siteUrl + '/'},
-],
-},
-],
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebPage',
+      name: '紹介コード・招待コードまとめ｜ポイ活',
+      description: SITE.description,
+      inLanguage: 'ja',
+      dateModified: SITE.dateModified,
+    },
+    { '@type': 'ItemList', name: '紹介コード・招待コード一覧', numberOfItems: 19, itemListElement: itemList },
+    {
+      '@type': 'FAQPage',
+      mainEntity: FAQS.slice(0, 5).map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'ポイ活レビュー帖 トップ', item: SITE.siteUrl + '/' },
+        { '@type': 'ListItem', position: 2, name: '紹介コード・招待コードまとめ', item: SITE.siteUrl + '/' },
+      ],
+    },
+  ],
 };
 
-const title = '紹介コード・招待コードまとめ｜ワラウ・ハピタス・モッピー・Freecash・TikTok・PayPay・楽天モバイル等の特典一覧';
+const title = '紹介コード・招待コードまとめ｜ポイ活の悩み・疑問から探せるポイ活レビュー帖';
 ---
 
 <BaseLayout title={title} description={SITE.description} canonicalPath="/" jsonLd={jsonLd}>
 <div class="wrap">
 <div class="hero">
-<img src="/mea-poikatsu-blog/images/hero.jpg" alt="メアのポイ活バナー ポイ活×招待コード×紹介系 一緒におトクをGETしよう" width="1179" height="393"  fetchpriority="high"/>
+<img src="/mea-poikatsu-blog/images/hero.jpg" alt="メアのポイ活バナー ポイ活×招待コード×紹介系 一緒におトクをGETしよう" width="1179" height="393" fetchpriority="high" />
 </div>
 <p class="pace-banner">🌱1ヶ月 約5万円ペースで貯まるよ♡</p>
 <style>
@@ -69,11 +144,11 @@ const title = '紹介コード・招待コードまとめ｜ワラウ・ハピ�
 このページは広告（PR）を含みます。掲載している紹介リンク・紹介コードを使って各サービスに登録し、所定の条件を満たすと、メア（紹介者）に、各サービスの運営会社から紹介報酬が支払われる場合があります。紹介報酬が発生しても、あなたの特典が減ったり、利用料金が上乗せされたりすることはないので安心してね。仕組みと対象範囲は<a href="/mea-poikatsu-blog/ad-disclosure/">「広告・紹介報酬に関する表記」</a>にまとめています。
 </div>
 
-<p class="article-meta">最終更新：2026年11月23日</p>
+<p class="article-meta">最終更新：2026年11月25日</p>
 
-<h1>紹介コード・招待コードまとめ💖 ポイ活は「紹介から登録」がいちばんお得だよ♪</h1>
+<h1>ポイ活の「困った」から探す、紹介コード・招待コードまとめ💖</h1>
 <p class="lead">
-はじめまして、メアです🎀 ポイントサイトやアプリに普通に登録しちゃうと、もらえるはずの特典がゼロになっちゃうことがあるの💦 だからこのページでは、ワラウ・ハピタス・モッピー・Freecash・TikTok・PayPay・楽天モバイル・サンポ・ぶたまる・ミラポイ・トクエル・dipsファームなど全19サービスの紹介コード・招待コード・特典額・達成条件・登録リンクを、メアがまとめてご紹介しています✨ コードはワンタップでコピーできるよ♪ 無言利用もOK、あなたの個人情報がメアに伝わることもないので安心してね💕
+はじめまして、メアです🎀 ポイ活って、始める前も始めた後も「これってどうなの？」が次々出てくるよね💦 このブログは、みんながつまずきやすい悩み・疑問から逆引きできるように作ったよ。まずは下の悩みリストから、自分の「困った」に一番近いものを選んでみてね♪ 全19サービスの紹介コード・特典・条件は、各記事にまとめてあります✨
 </p>
 <div class="notice">
 ⭐ メアからのお知らせ💖 今いちばんおすすめなのは Freecash（紹介コード：3BQLXB）だよ♪ 招待コード入力後、初回DLで1,430円分ゲット✨ ⭐
@@ -81,76 +156,63 @@ const title = '紹介コード・招待コードまとめ｜ワラウ・ハピ�
 
 <AdSlot position="top" />
 
-<h2 id="code-table">📋 紹介コード一覧表（メアのおすすめ順）</h2>
-<p>全19サービスの紹介コード・特典・条件要点を、メアのおすすめ順に一覧にしたよ♪ 特典や条件は変わることがあるから、登録前に各サービスの公式案内も確認してね。</p>
-<div class="table-scroll">
-<table>
-<thead>
-<tr><th>順位</th><th>サービス</th><th>紹介コード</th><th>特典</th><th>条件要点</th><th>最終確認日</th><th></th></tr>
-</thead>
-<tbody>
-{CODE_TABLE_ORDER.map((slug, i) => {
-const a = bySlug.get(slug)!;
-return (
-<tr>
-<td>{i + 1}</td>
-<td>{a.data.service}</td>
-<td>{a.data.code ? (a.data.code2 ? `${a.data.code}／${a.data.code2}` : a.data.code) : 'リンク型'}</td>
-<td>{a.data.benefit}</td>
-<td>{a.data.conditions ?? '—'}</td>
-<td>{a.data.verified ?? a.data.dateModified}</td>
-<td><a href={`/mea-poikatsu-blog/articles/${slug}/`}>詳細へ</a></td>
-</tr>
-);
-})}
-</tbody>
-</table>
+<h2 id="worries">😥 ポイ活の悩み・疑問リスト｜あなたの「困った」はどれ？</h2>
+<p>ポイ活でよくある悩みを10個並べたよ。気になる番号をタップすると、その悩みの答えをまとめた記事に進めます♪</p>
+<ol class="worry-list">
+{WORRIES.map((w, i) => (
+<li class="worry-item">
+<span class="worry-no" aria-hidden="true">{i + 1}</span>
+<div class="worry-body">
+<p class="worry-q">{w.q}</p>
+<p class="worry-hint">{w.hint}</p>
+<a class="worry-link" href={worryHref(w.slug)}>→ 答えはこの記事：{w.label}</a>
 </div>
+</li>
+))}
+</ol>
 
-<h2>⭐ イチオシ ― ゲームで稼ぐならコレ！</h2>
-<ServiceCard article={freecash} showBody={true} />
-
-<h2 id="point-sites">ポイントサイトの紹介コード・招待コード一覧</h2>
-<p>ワラウ・ハピタス・モッピーはポイ活の王道3サイトだよ✨ 全部無料で登録して、案件ごとに一番高いサイトを使い分けるのが、メア流のコツです♪</p>
-<img src="/mea-poikatsu-blog/images/banner-pointsites.jpg" alt="ワラウ・ハピタス・モッピーの紹介コードバナー" loading="lazy" />
-<div class="card-grid">
-{byCategory('point-sites').filter((a) => slugOf(a.id) !== 'freecash').map((a) => <ServiceCard article={a} />)}
+<h2 id="qa">❓ 悩み別Q&A｜先に短く答えます</h2>
+<p>まずは短い答えだけ先にどうぞ。詳しい条件や手順は、各サービスの記事で確認してね。</p>
+{FAQS.map((f, i) => (
+<div class="qa-item">
+<h3><span class="qa-mark qa-q" aria-hidden="true">Q</span>{f.q}</h3>
+<p><span class="qa-mark qa-a" aria-hidden="true">A</span>{f.a}</p>
+<p class="qa-more">詳しくは → <a href={FAQ_MORE[i].href}>{FAQ_MORE[i].label}</a></p>
 </div>
-
-<h2 id="sns-video">TikTok・TikTok Liteの招待コード</h2>
-<p>動画を見るだけ・登録するだけで報酬がもらえる系だよ🎬 登録時は Wi-FiをOFFにしてモバイル通信で、招待URLを直接開くのが失敗しないコツ♪ メアもこの方法でバッチリでした✨</p>
-<div class="card-grid">
-{byCategory('sns-video').map((a) => <ServiceCard article={a} />)}
-</div>
+))}
+<p><a href="/mea-poikatsu-blog/faq/">よくある質問の一覧を見る →</a></p>
 
 <AdSlot position="middle" />
 
-<h2 id="payment-bank">決済・銀行・通信の紹介コード（PayPay・楽天モバイル・SMBC Olive）</h2>
-<p>普段使うお金まわりのサービスこそ、紹介特典が大きいジャンルなの💰 楽天モバイルは最大13,000ポイントで、全サービス中トップだよ✨</p>
+<h2 id="recommend">⭐ 悩みが解決したら、まずはこの6つから</h2>
+<p>メアのおすすめ順に並べたよ♪ 特典や条件は変わることがあるから、登録前に各サービスの公式案内も確認してね。</p>
 <div class="card-grid">
-{byCategory('payment-bank').map((a) => <ServiceCard article={a} />)}
-</div>
-
-<h2 id="others">オリくじ・ポケカツ・Museの招待コード</h2>
-<p>オンラインオリパ系の2サービスとAIアシスタントだよ🎁 0円でも楽しめるものもあるので、まずは無料分から気軽にどうぞ♪</p>
-<div class="card-grid">
-{byCategory('others').map((a) => <ServiceCard article={a} />)}
-</div>
-
-<h2 id="new-apps">🆕 新着ポイ活アプリの招待コード（サンポ・ぶたまる・ミラポイ・トクエル・dipsファーム）</h2>
-<p>メアが新しく追加した5つのポイ活アプリだよ🆕 どれも無料で始められます♪ 登録する前に、下のカードで招待コードをコピーしておくのがおすすめです💖</p>
-<div class="card-grid">
-{byCategory('new-apps').map((a) => <ServiceCard article={a} />)}
+{PRIORITY.map((slug) => <ServiceCard article={bySlug.get(slug)!} ctaPosition="recommend" />)}
 </div>
 
 <h2 id="howto">紹介コードで損しないための使い方・始め方</h2>
-<p>ポイ活初心者さんがつまずきやすいのは「登録してからコードを探す」パターン💦 特典は登録時だけが対象のことがほとんどだから、先にチェックしてね♪</p>
+<p>初心者さんがつまずきやすいのは「登録してからコードを探す」パターン💦 特典は登録時だけが対象のことがほとんどだから、先にチェックしてね♪</p>
 <ol class="steps">
 <li><strong>先にコードをコピー</strong>：気になるサービスのカードで紹介コードをコピーしておきます。リンク型はそのまま次のステップへ。</li>
 <li><strong>紹介リンクから登録</strong>：必ずこのページの登録ボタンから進んで登録してください。公式サイトから直接登録すると紹介特典が付かない場合があります。</li>
 <li><strong>条件を確認して達成</strong>：広告利用・支払い・発信通話など、特典条件は各カードに記載。期限があるものは早めに済ませましょう。</li>
 <li><strong>ポイントを受け取る</strong>：条件達成後、各サービスのマイページで付与を確認。ポイントは現金・電子マネー・ギフト券などに交換できます。</li>
 </ol>
+
+<h2 id="all-services">📚 全19サービスの記事一覧</h2>
+<p>悩み別じゃなくサービス名から探したい人はこちら。全サービスの特典とコードは各記事に載っているよ。</p>
+<ul class="all-list">
+{CODE_TABLE_ORDER.map((slug) => {
+const a = bySlug.get(slug)!;
+return (
+<li>
+<a href={`/mea-poikatsu-blog/articles/${slug}/`}>{a.data.service}</a>
+<span class="all-benefit">{a.data.benefit}</span>
+{a.data.code ? <span class="all-code">コード：{a.data.code}{a.data.code2 ? `／${a.data.code2}` : ''}</span> : <span class="all-code">リンク型</span>}
+</li>
+);
+})}
+</ul>
 
 <h2 id="sisters">姉妹ブログ｜同じ紹介コードを、違う見方で</h2>
 <p>このブログと同じ19サービスの紹介コードを、見た目や使い方が違う5つの姉妹ブログでも掲載しているよ📚 自分に合った探し方でどうぞ♪ どのブログから登録しても特典は同じだから安心してね💕</p>
@@ -160,41 +222,21 @@ return (
 ))}
 </ul>
 
-<h2 id="faq">よくある質問｜紹介コード・ポイ活の疑問</h2>
-{FAQS.map((f) => (
-<div class="faq-item">
-<h3>{f.q}</h3>
-<p>{f.a}</p>
-</div>
-))}
-<p><a href="/mea-poikatsu-blog/faq/">よくある質問の一覧を見る →</a></p>
-
 <h2>📂 カテゴリー</h2>
 <ul>
 {CATEGORIES.map((c) => (
 <li><a href={`/mea-poikatsu-blog/categories/${c.slug}/`}>{c.name}</a>（{byCategory(c.slug).length}）</li>
 ))}
-<li><a href="/mea-poikatsu-blog/#code-table">紹介コード一覧表</a>（19）</li>
 <li><a href="/mea-poikatsu-blog/faq/">よくある質問</a>（7）</li>
-</ul>
-
-<h2>🔥 人気の紹介コード</h2>
-<ul>
-<li><a href="/mea-poikatsu-blog/articles/freecash/">Freecash 3BQLXB</a> 初回DLで1,430円分</li>
-<li><a href="/mea-poikatsu-blog/articles/warau/">ワラウ bEs7</a> 2,500pt</li>
-<li><a href="/mea-poikatsu-blog/articles/tiktok/">TikTok 284097117</a> 6,000円分</li>
-<li><a href="/mea-poikatsu-blog/articles/tiktok-lite/">TikTok Lite 890270647</a> 1,400円分</li>
-<li><a href="/mea-poikatsu-blog/articles/moppy/">モッピー 7xaGA123</a> 7,000P</li>
-<li><a href="/mea-poikatsu-blog/articles/hapitas/">ハピタス INXAHV</a> 2,300円分</li>
-<li><a href="/mea-poikatsu-blog/articles/rakuten-mobile/">楽天モバイル</a> 13,000pt</li>
+<li><a href="/mea-poikatsu-blog/search/">サイト内検索</a></li>
 </ul>
 
 <h2>🌐 全媒体の入口</h2>
 <p><a href={SITE.hubUrl} target="_blank" rel="noopener">ポイ活ポータル（トップページ）</a> — ホームページ・ブログ・掲示板・note・Xなど、メアの媒体はここからたどれます♪</p>
 
 <h2>🎀 このブログについて</h2>
-<p>ポイ活が大好きなメアが、私が実際に使っている紹介コードだけをまとめたブログだよ💖 特典額や条件が変わったら随時更新するね♪ まずは Freecash と ポイントサイト3つ から始めるのがおすすめだよ✨</p>
-<p><a href="/mea-poikatsu-blog/about/">運営者情報を見る →</a></p>
+<p>ポイ活が大好きなメアが、私が実際に使っている紹介コードだけをまとめたブログだよ💖 特典額や条件が変わったら随時更新するね♪ 書いている人のことは<a href="/mea-poikatsu-blog/author/mea/">著者プロフィール</a>にまとめています。</p>
+<p><a href="/mea-poikatsu-blog/about/">運営者情報を見る →</a> ／ <a href="/mea-poikatsu-blog/author/mea/">著者プロフィールを見る →</a></p>
 
 <AdSlot position="bottom" />
 </div>
