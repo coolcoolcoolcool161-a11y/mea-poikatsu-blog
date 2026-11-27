@@ -1,23 +1,23 @@
 ---
-title: "SMBC Oliveの紹介コード FF89103-3439377｜Vポイント1,000円相当"
-description: "Oliveアカウント紹介プログラム。エントリー＋Oliveアカウント契約＋契約日の翌月末時点で残高10,000円以上でVポイント1,000円相当がもらえます。"
+title: "SMBC Oliveの紹介コード FF89103-3439377｜Vポイント1,000pt"
+description: "Oliveアカウント紹介プログラム。エントリー＋Oliveアカウント契約＋契約日の翌月末時点で残高10,000円以上でVポイント1,000ptがもらえます。"
 service: "SMBC Olive（三井住友銀行）"
 category: payment-bank
-benefit: "Vポイント1,000円相当"
+benefit: "Vポイント1,000pt"
 code: "FF89103-3439377"
 url: "https://www.smbc.co.jp/kojin/redirect/referral04/index.html"
 image: "/images/banner-olive.jpg"
 dateModified: "2026-11-19"
-conditions: "エントリーとOlive契約を行い、契約日の翌月末時点で残高1万円以上が条件です。達成でVポイント1,000円相当がもらえます。"
+conditions: "エントリーとOlive契約を行い、契約日の翌月末時点で残高1万円以上が条件です。達成でVポイント1,000ptがもらえます。"
 ---
 
 ## SMBC Oliveとは
 
-Oliveアカウント紹介プログラム。エントリー＋Oliveアカウント契約＋契約日の翌月末時点で残高10,000円以上でVポイント1,000円相当がもらえます。
+Oliveアカウント紹介プログラム。エントリー＋Oliveアカウント契約＋契約日の翌月末時点で残高10,000円以上でVポイント1,000ptがもらえます。
 
 ## 紹介特典
 
-- **Vポイント1,000円相当**
+- **Vポイント1,000pt**
 
 ## 受け取り方
 

@@ -1,14 +1,14 @@
 ---
-title: "ぶたまるの招待コード JUTN9FH｜500pt（50円分）・歩かなくてもできるポイ活"
+title: "ぶたまるの招待コード JUTN9FH｜500pt・歩かなくてもできるポイ活"
 description: "ぶたの風船をタップして短いCMを見るだけでポイントが貯まるアプリ。歩かなくてもOKなので、スキマ時間に気軽にポイ活できます。"
 service: "ぶたまる"
 category: new-apps
-benefit: "500pt（50円分）"
+benefit: "500pt"
 code: "JUTN9FH"
 url: "https://app.moneypig.gy/friend_code?friend_code=JUTN9FH"
 image: "/images/banner-butamaru.jpg"
 dateModified: "2026-11-19"
-conditions: "招待コード入力とブタップ10回、アカウント作成で500pt（50円相当）がもらえます。"
+conditions: "招待コード入力とブタップ10回、アカウント作成で500ptがもらえます。"
 ---
 
 ## ぶたまる（マネーピッグ）とは
@@ -17,7 +17,7 @@ conditions: "招待コード入力とブタップ10回、アカウント作成�
 
 ## 紹介特典
 
-- **招待コード入力で500pt（50円分）ゲット**
+- **招待コード入力で500ptゲット**
 
 ## 特典の受け取り方
 
